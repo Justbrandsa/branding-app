@@ -1,0 +1,1 @@
+import { NextResponse } from "next/server"; export async function GET(){ const minOrder = Number(process.env.MIN_ORDER_ZAR || 500); return NextResponse.json({ minOrderZar:minOrder, currency:"ZAR", appBaseUrl: process.env.APP_BASE_URL }); }

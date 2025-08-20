@@ -1,0 +1,9 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql"; url = env("DATABASE_URL") }
+model BrandingMethod { id String @id @default(cuid()) key String @unique title String enabled Boolean @default(true) positions Position[] prices PriceRule[] setupFees SetupFee[] feeMaps FeeSkuMap[] createdAt DateTime @default(now()) updatedAt DateTime @updatedAt }
+model Position { id String @id @default(cuid()) method BrandingMethod @relation(fields:[methodId], references:[id]) methodId String key String title String }
+model PriceRule { id String @id @default(cuid()) method BrandingMethod @relation(fields:[methodId], references:[id]) methodId String position Position? @relation(fields:[positionId], references:[id]) positionId String? attributeSchema Json? qtyBreaks Json? perUnitAmount Decimal @db.Decimal(10,2) currency String }
+model SetupFee { id String @id @default(cuid()) method BrandingMethod @relation(fields:[methodId], references:[id]) methodId String amount Decimal @db.Decimal(10,2) currency String }
+model FeeSkuMap { id String @id @default(cuid()) type String method BrandingMethod @relation(fields:[methodId], references:[id]) methodId String tierKey String? variantGid String }
+model Artwork { id String @id @default(cuid()) customerId String? fileGid String url String sha256 String createdAt DateTime @default(now()) }
+model Policy { id Int @id @default(1) minOrderZar Int @default(500) dedupeScope String @default("per_product") requireUpload Boolean @default(true) disableDynamicBuy Boolean @default(true) taxFollowMain Boolean @default(true) }

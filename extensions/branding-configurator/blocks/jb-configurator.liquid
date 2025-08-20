@@ -1,0 +1,16 @@
+<div id="jb-configurator-{{ block.id }}"
+     class="jb-configurator"
+     data-product-gid="{{ product.admin_graphql_api_id }}"
+     data-variant-gid="{{ product.selected_or_first_available_variant.admin_graphql_api_id }}">
+  <div class="jb-config-summary" hidden></div>
+  <div class="jb-config-form"></div>
+</div>
+<script>window.__JB_APP_URL = {{ block.settings.app_base_url | json }};</script>
+{{ 'jb-configurator.js' | asset_url | script_tag }}
+{% schema %}
+{ "name": "JB Branding Configurator", "target": "section",
+  "settings": [
+    { "type": "text", "id": "app_base_url", "label": "App Base URL", "default": "http://localhost:3000" },
+    { "type": "checkbox", "id": "require_upload", "label": "Require artwork upload", "default": true }
+  ] }
+{% endschema %}
